@@ -217,25 +217,29 @@
 							<div class="editor-content">
 								<h1 id="Extensions-Tutorial-Wallet-Settings" class="article-heading"><a href="#Extensions-Tutorial-Wallet-Settings" class="headerlink" title="Extensions Tutorial - Wallet Settings"></a>Extensions Tutorial - Wallet Settings<a class="article-anchor" href="#Extensions-Tutorial-Wallet-Settings" aria-hidden="true"></a></h1><p>This tutorial will walk you through the creation and deployment of a new <a href="wallet_settings.html">wallet setting</a>.</p>
 <h1 id="Add-meta-data" class="article-heading"><a href="#Add-meta-data" class="headerlink" title="Add meta data"></a>Add meta data<a class="article-anchor" href="#Add-meta-data" aria-hidden="true"></a></h1><p>First step is to create the skeleton extension with some relevant metadata:</p>
-<pre><code>{meta
+<pre><code class="clojure">{meta
  {:name          &quot;Hello wallet settings&quot;
   :description   &quot;&quot;
   :documentation &quot;&quot;}}
-</code></pre><h1 id="Define-entry-point" class="article-heading"><a href="#Define-entry-point" class="headerlink" title="Define entry point"></a>Define entry point<a class="article-anchor" href="#Define-entry-point" aria-hidden="true"></a></h1><p>In this tutorial a wallet settings is created: it’s specific id is <code>hello</code> and the generic hook type for wallet settings is <code>wallet.settings</code>.</p>
-<h1 id="Label" class="article-heading"><a href="#Label" class="headerlink" title="Label"></a>Label<a class="article-anchor" href="#Label" aria-hidden="true"></a></h1><pre><code>{hooks/wallet.settings.hello
+</code></pre>
+<h1 id="Define-entry-point" class="article-heading"><a href="#Define-entry-point" class="headerlink" title="Define entry point"></a>Define entry point<a class="article-anchor" href="#Define-entry-point" aria-hidden="true"></a></h1><p>In this tutorial a wallet settings is created: it’s specific id is <code>hello</code> and the generic hook type for wallet settings is <code>wallet.settings</code>.</p>
+<h1 id="Label" class="article-heading"><a href="#Label" class="headerlink" title="Label"></a>Label<a class="article-anchor" href="#Label" aria-hidden="true"></a></h1><pre><code class="clojure">{hooks/wallet.settings.hello
  {...
   :label &quot;Settings label&quot;}}
-</code></pre><h1 id="on-click" class="article-heading"><a href="#on-click" class="headerlink" title="on-click"></a>on-click<a class="article-anchor" href="#on-click" aria-hidden="true"></a></h1><p>When clicked, the optional wallet settings <code>on-click</code> event will be executed.</p>
-<pre><code>{hooks/wallet.settings.hello
+</code></pre>
+<h1 id="on-click" class="article-heading"><a href="#on-click" class="headerlink" title="on-click"></a>on-click<a class="article-anchor" href="#on-click" aria-hidden="true"></a></h1><p>When clicked, the optional wallet settings <code>on-click</code> event will be executed.</p>
+<pre><code class="clojure">{hooks/wallet.settings.hello
  {...
   :on-click [load-rates]}}
-</code></pre><h1 id="view" class="article-heading"><a href="#view" class="headerlink" title="view"></a>view<a class="article-anchor" href="#view" aria-hidden="true"></a></h1><pre><code>{views/view
+</code></pre>
+<h1 id="view" class="article-heading"><a href="#view" class="headerlink" title="view"></a>view<a class="article-anchor" href="#view" aria-hidden="true"></a></h1><pre><code class="clojure">{views/view
  [text &quot;Hello&quot;]
 
  hooks/chat.command.dtwitter
  {...
   :view [view]}}
-</code></pre><h1 id="Full-extension-code" class="article-heading"><a href="#Full-extension-code" class="headerlink" title="Full extension code"></a>Full extension code<a class="article-anchor" href="#Full-extension-code" aria-hidden="true"></a></h1><pre><code>{meta {:name          &quot;Hello&quot;
+</code></pre>
+<h1 id="Full-extension-code" class="article-heading"><a href="#Full-extension-code" class="headerlink" title="Full extension code"></a>Full extension code<a class="article-anchor" href="#Full-extension-code" aria-hidden="true"></a></h1><pre><code class="clojure">{meta {:name          &quot;Hello&quot;
        :description   &quot;&quot;
        :documentation &quot;&quot;}
 
@@ -251,9 +255,10 @@
   :view    [settings-view]
   :on-open [preload]}}
 </code></pre>
+
 							</div>
 							<div class="docs-footer">
-								Last update: 2019-07-15
+								Last update: 2019-09-13
 								
 							</div>
 						</div>

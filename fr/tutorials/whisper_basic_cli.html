@@ -219,39 +219,46 @@
 <p>We understand that not many DApp developers want to use Whisper in the way Status does (as a massive, multi-user messaging protocol), but rather to move specific (and often important) information about interactions in/with their DApp or plug into Status chats at specific moments. This tutorial is intended to provide you with the skills needed to adapt Whisper to your needs: you should know both enough to plug into any Status chat easily, as well as how to use Whisper for your own work by the end. Many other teams are already doing this, and you can - for instance - find more information about how to extend the basic concepts here into an interesting system on the <a href="https://blog.hellobloom.io/introducing-bloom-payment-channels-enabled-by-ethereum-whisper-1fec8ba10a03" target="_blank" rel="noopener">Bloom blog</a>.</p>
 <p>We have created <a href="https://github.com/status-im/whisper-tutorial" target="_blank" rel="noopener">a repository</a> specially for this tutorial. Please feel free to add additional tutorials if you would like to help the community out.</p>
 <p>Before we clone that repository though, let’s make sure all our dependencies are properly set up, especially NodeJS and Go-Ethereum. We’ll be using the latest version of Geth to get you up to speed on what Whisper looks like today.</p>
-<h4 id="NodeJS-8-10" class="article-heading"><a href="#NodeJS-8-10" class="headerlink" title="NodeJS 8.10+"></a>NodeJS 8.10+<a class="article-anchor" href="#NodeJS-8-10" aria-hidden="true"></a></h4><pre><code>node version
+<h4 id="NodeJS-8-10" class="article-heading"><a href="#NodeJS-8-10" class="headerlink" title="NodeJS 8.10+"></a>NodeJS 8.10+<a class="article-anchor" href="#NodeJS-8-10" aria-hidden="true"></a></h4><pre><code class="bash">node version
 &gt; 8.10+
-</code></pre><p>If you need to update Node, please <a href="https://github.com/creationix/nvm#installation" target="_blank" rel="noopener">install <code>nvm</code></a> and install/use the LTS version. The macOS/Linux commands are provided for you below:</p>
-<pre><code>curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+</code></pre>
+<p>If you need to update Node, please <a href="https://github.com/creationix/nvm#installation" target="_blank" rel="noopener">install <code>nvm</code></a> and install/use the LTS version. The macOS/Linux commands are provided for you below:</p>
+<pre><code class="bash">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 nvm install --lts
 nvm use lts
-</code></pre><h4 id="Go-ethereum-1-8-17" class="article-heading"><a href="#Go-ethereum-1-8-17" class="headerlink" title="Go-ethereum 1.8.17+"></a>Go-ethereum 1.8.17+<a class="article-anchor" href="#Go-ethereum-1-8-17" aria-hidden="true"></a></h4><pre><code>geth version
+</code></pre>
+<h4 id="Go-ethereum-1-8-17" class="article-heading"><a href="#Go-ethereum-1-8-17" class="headerlink" title="Go-ethereum 1.8.17+"></a>Go-ethereum 1.8.17+<a class="article-anchor" href="#Go-ethereum-1-8-17" aria-hidden="true"></a></h4><pre><code class="bash">geth version
 &gt; 1.8.17+
-</code></pre><p>If you need to <a href="https://github.com/ethereum/go-ethereum/wiki/Building-Ethereum" target="_blank" rel="noopener">install <code>geth</code></a>, you can use the below for macOS:</p>
-<pre><code>brew tap ethereum/ethereum
+</code></pre>
+<p>If you need to <a href="https://github.com/ethereum/go-ethereum/wiki/Building-Ethereum" target="_blank" rel="noopener">install <code>geth</code></a>, you can use the below for macOS:</p>
+<pre><code class="bash">brew tap ethereum/ethereum
 brew install ethereum
 
 /* Just to upgrade */
 brew upgrade ethereum
-</code></pre><p>And these instructions if you’re using a Linux distro:</p>
-<pre><code>sudo add-apt-repository -y ppa:ethereum/ethereum
+</code></pre>
+<p>And these instructions if you’re using a Linux distro:</p>
+<pre><code class="bash">sudo add-apt-repository -y ppa:ethereum/ethereum
 sudo apt-get install ethereum
 
-/* Just to upgrade */
+# Just to upgrade
 sudo apt-get update ethereum
-</code></pre><h2 id="Start-a-Geth-node" class="article-heading"><a href="#Start-a-Geth-node" class="headerlink" title="Start a Geth node"></a>Start a Geth node<a class="article-anchor" href="#Start-a-Geth-node" aria-hidden="true"></a></h2><p>To use Whisper, you need a running Geth node. You can execute the following command to start a node with the minimum required options:</p>
-<pre><code>geth --testnet --syncmode=light --ws --wsorigins=mychat --shh --wsapi=web3,shh,net
-</code></pre><p>Here, we’re connecting to Ropsten, ensuring that we’re not validating full blocks (only headers), ensuring that <code>websockets</code> are enabled with a specific origin (which we’ll use later in our JS), ensuring that Whisper (i.e. <code>shh</code>) is enabled, and that the <code>web</code>, <code>shh</code> and <code>net</code> APIs are available to us.</p>
+</code></pre>
+<h2 id="Start-a-Geth-node" class="article-heading"><a href="#Start-a-Geth-node" class="headerlink" title="Start a Geth node"></a>Start a Geth node<a class="article-anchor" href="#Start-a-Geth-node" aria-hidden="true"></a></h2><p>To use Whisper, you need a running Geth node. You can execute the following command to start a node with the minimum required options:</p>
+<pre><code class="bash">geth --testnet --syncmode=light --ws --wsorigins=mychat --shh --wsapi=web3,shh,net
+</code></pre>
+<p>Here, we’re connecting to Ropsten, ensuring that we’re not validating full blocks (only headers), ensuring that <code>websockets</code> are enabled with a specific origin (which we’ll use later in our JS), ensuring that Whisper (i.e. <code>shh</code>) is enabled, and that the <code>web</code>, <code>shh</code> and <code>net</code> APIs are available to us.</p>
 <h2 id="Setup-and-explore" class="article-heading"><a href="#Setup-and-explore" class="headerlink" title="Setup and explore!"></a>Setup and explore!<a class="article-anchor" href="#Setup-and-explore" aria-hidden="true"></a></h2><p>Now that we have all the prerequisites set up, we need to clone our <a href="https://github.com/status-im/whisper-tutorial" target="_blank" rel="noopener">tutorial project</a> and install its dependencies.</p>
-<pre><code>git clone https://github.com/status-im/whisper-tutorial.git
+<pre><code class="bash">git clone https://github.com/status-im/whisper-tutorial.git
 cd whisper-tutorial
 npm install
-</code></pre><p>Once you have installed all the dependencies, you may execute <code>npm start</code> to see what the tutorial is about. It’s pretty simple - just a CLI interface that will allow you to send Whisper messages using a <a href="https://github.com/status-im/whisper-tutorial/blob/start-here/src/index.js#L6" target="_blank" rel="noopener">default topic</a> and some other settings. We cover below how to send both public and private messages.</p>
+</code></pre>
+<p>Once you have installed all the dependencies, you may execute <code>npm start</code> to see what the tutorial is about. It’s pretty simple - just a CLI interface that will allow you to send Whisper messages using a <a href="https://github.com/status-im/whisper-tutorial/blob/start-here/src/index.js#L6" target="_blank" rel="noopener">default topic</a> and some other settings. We cover below how to send both public and private messages.</p>
 <p>To understand better why we go through the following steps and to understand each concept we introduce in more detail, please read through the <a href="../research/extended_features.html">extended features</a> section above as you complete this.</p>
-<p>You can close the application with <code>Ctrl + c</code> at any time.</p>
+<p>You can close the application with <code>Ctrl + C</code> at any time.</p>
 <h2 id="Coding-our-chat-CLI" class="article-heading"><a href="#Coding-our-chat-CLI" class="headerlink" title="Coding our chat CLI"></a>Coding our chat CLI<a class="article-anchor" href="#Coding-our-chat-CLI" aria-hidden="true"></a></h2><p>The file <code>src/index.js</code> is full of <code>TODO</code>s that we need to work with. The following sections will help us complete these actions in a logical way. At the end of each section you can execute <code>npm start</code> to see the progress.</p>
 <h4 id="TODO-Web3-connection" class="article-heading"><a href="#TODO-Web3-connection" class="headerlink" title="// TODO: Web3 connection"></a><code>// TODO: Web3 connection</code><a class="article-anchor" href="#TODO-Web3-connection" aria-hidden="true"></a></h4><p>In order to communicate via Whisper, we need a web3 connection. After ensuring that <code>geth</code> is running, we can connect to our node with the following code:</p>
-<pre><code>// Web3 connection
+<pre><code class="javascript">// Web3 connection
 const web3 = new Web3();
 try {
     web3.setProvider(new Web3.providers.WebsocketProvider(&quot;ws://localhost:8546&quot;, {headers: {Origin: &quot;mychat&quot;}}));
@@ -259,18 +266,22 @@ try {
 } catch(err) {
     process.exit();
 }
-</code></pre><p>Calling web3 and telling it to set its <code>provider</code> to our running geth instance (with the options above) will enable the CLI to connect to our node. It uses the origin <code>mychat</code>, specified in the <code>--wsorigins</code> flag of the <code>geth</code> command. If it cannot connect, the chat window closes.</p>
+</code></pre>
+<p>Calling web3 and telling it to set its <code>provider</code> to our running geth instance (with the options above) will enable the CLI to connect to our node. It uses the origin <code>mychat</code>, specified in the <code>--wsorigins</code> flag of the <code>geth</code> command. If it cannot connect, the chat window closes.</p>
 <h4 id="TODO-Generate-keypair" class="article-heading"><a href="#TODO-Generate-keypair" class="headerlink" title="// TODO: Generate keypair"></a><code>// TODO: Generate keypair</code><a class="article-anchor" href="#TODO-Generate-keypair" aria-hidden="true"></a></h4><p>We need to generate a keypair that is going to be used to sign the messages we send. We will use the same keypair to receive and decrypt private messages. This is as simple as calling a specific function that is exposed through the <code>shh</code> API:</p>
-<pre><code>// Generate keypair
+<pre><code class="javascript">// Generate keypair
 const keyPair = await web3.shh.newKeyPair();
-</code></pre><h4 id="TODO-Generate-a-symmetric-key" class="article-heading"><a href="#TODO-Generate-a-symmetric-key" class="headerlink" title="// TODO: Generate a symmetric key"></a><code>// TODO: Generate a symmetric key</code><a class="article-anchor" href="#TODO-Generate-a-symmetric-key" aria-hidden="true"></a></h4><p>“Public” messages are messages encrypted only by the whisper topic: i.e. they are not addressed to anyone in particular and are received by anyone that’s listening in a specific channel. In our chat application, our channel is represented by a shared symmetric key whose “password” is just the channel we’ll be using and listening to:</p>
-<pre><code>// Generate a symmetric key
+</code></pre>
+<h4 id="TODO-Generate-a-symmetric-key" class="article-heading"><a href="#TODO-Generate-a-symmetric-key" class="headerlink" title="// TODO: Generate a symmetric key"></a><code>// TODO: Generate a symmetric key</code><a class="article-anchor" href="#TODO-Generate-a-symmetric-key" aria-hidden="true"></a></h4><p>“Public” messages are messages encrypted only by the whisper topic: i.e. they are not addressed to anyone in particular and are received by anyone that’s listening in a specific channel. In our chat application, our channel is represented by a shared symmetric key whose “password” is just the channel we’ll be using and listening to:</p>
+<pre><code class="javascript">// Generate a symmetric key
 const channelSymKey = await web3.shh.generateSymKeyFromPassword(DEFAULT_CHANNEL);
-</code></pre><h4 id="TODO-Obtain-public-key" class="article-heading"><a href="#TODO-Obtain-public-key" class="headerlink" title="// TODO: Obtain public key"></a><code>// TODO: Obtain public key</code><a class="article-anchor" href="#TODO-Obtain-public-key" aria-hidden="true"></a></h4><p>We need to generate for ourselves the public key so that we can identify messages that are sent over our channel. This is done with the following code:</p>
-<pre><code>// Obtain public key
+</code></pre>
+<h4 id="TODO-Obtain-public-key" class="article-heading"><a href="#TODO-Obtain-public-key" class="headerlink" title="// TODO: Obtain public key"></a><code>// TODO: Obtain public key</code><a class="article-anchor" href="#TODO-Obtain-public-key" aria-hidden="true"></a></h4><p>We need to generate for ourselves the public key so that we can identify messages that are sent over our channel. This is done with the following code:</p>
+<pre><code class="javascript">// Obtain public key
 const pubKey = await web3.shh.getPublicKey(keyPair);
-</code></pre><h4 id="TODO-Send-a-public-message" class="article-heading"><a href="#TODO-Send-a-public-message" class="headerlink" title="// TODO: Send a public message"></a><code>// TODO: Send a public message</code><a class="article-anchor" href="#TODO-Send-a-public-message" aria-hidden="true"></a></h4><p>Once we have generated the symmetric key, we can send messages using <code>web3.shh.post</code>. We’ll sign our message with our <code>keypair</code> and send it to a particular topic. </p>
-<pre><code>// Send a public message
+</code></pre>
+<h4 id="TODO-Send-a-public-message" class="article-heading"><a href="#TODO-Send-a-public-message" class="headerlink" title="// TODO: Send a public message"></a><code>// TODO: Send a public message</code><a class="article-anchor" href="#TODO-Send-a-public-message" aria-hidden="true"></a></h4><p>Once we have generated the symmetric key, we can send messages using <code>web3.shh.post</code>. We’ll sign our message with our <code>keypair</code> and send it to a particular topic.</p>
+<pre><code class="javascript">// Send a public message
 web3.shh.post({
     symKeyID: channelSymKey,
     sig: keyPair,
@@ -280,14 +291,15 @@ web3.shh.post({
     powTime: POW_TIME,
     powTarget: POW_TARGET
 });
-</code></pre><ul>
+</code></pre>
+<ul>
 <li><code>topic</code> is a 4 bytes hex string that can be used to filter messages. </li>
 <li><code>ttl</code> is the time to live in seconds. </li>
 <li><code>powTime</code> is the maximal time in seconds to be spent on proof of work. </li>
 <li><code>powTarget</code> is the minimal PoW target required for this message.</li>
 </ul>
 <h4 id="TODO-Subscribe-to-public-chat-messages" class="article-heading"><a href="#TODO-Subscribe-to-public-chat-messages" class="headerlink" title="// TODO: Subscribe to public chat messages"></a><code>// TODO: Subscribe to public chat messages</code><a class="article-anchor" href="#TODO-Subscribe-to-public-chat-messages" aria-hidden="true"></a></h4><p>You may have noticed that the messages you are sending are not being displayed on the screen. In order to see messages in Whisper, we’ll need to <code>subscribe</code> to the messages received by the symmetric key. We can also create a filter using the same topic:</p>
-<pre><code>// Subscribe to public chat messages
+<pre><code class="javascript">// Subscribe to public chat messages
 web3.shh.subscribe(&quot;messages&quot;, {
     minPow: POW_TARGET,
     symKeyID: channelSymKey,
@@ -298,11 +310,12 @@ web3.shh.subscribe(&quot;messages&quot;, {
 }).on(&#39;error&#39;, (err) =&gt; {
     ui.addError(&quot;Couldn&#39;t decode message: &quot; + err.message);
 });
-</code></pre><p>After adding this code, open two instances of the chat application and write a message. You’ll see how it gets displayed in both windows. The only thing is that all messages you write can be seen by anyone listening to this channel, so lets fix this by adding private messages.</p>
-<h4 id="TODO-Send-private-message" class="article-heading"><a href="#TODO-Send-private-message" class="headerlink" title="// TODO: Send private message"></a><code>// TODO: Send private message</code><a class="article-anchor" href="#TODO-Send-private-message" aria-hidden="true"></a></h4><p>In order to send private messages, we have a command similar to IRC: <code>/msg 0xcontact_public_key message</code>. So, if you want to send a message, you just simply copy the contact’s public key from the chat CLI, and write the message. </p>
-<p>We already assign the contact’s public key to the <code>contactCode</code> variable, and the body of the message in <code>messageContent</code>. </p>
+</code></pre>
+<p>After adding this code, open two instances of the chat application and write a message. You’ll see how it gets displayed in both windows. The only thing is that all messages you write can be seen by anyone listening to this channel, so lets fix this by adding private messages.</p>
+<h4 id="TODO-Send-private-message" class="article-heading"><a href="#TODO-Send-private-message" class="headerlink" title="// TODO: Send private message"></a><code>// TODO: Send private message</code><a class="article-anchor" href="#TODO-Send-private-message" aria-hidden="true"></a></h4><p>In order to send private messages, we have a command similar to IRC: <code>/msg 0xcontact_public_key message</code>. So, if you want to send a message, you just simply copy the contact’s public key from the chat CLI, and write the message.</p>
+<p>We already assign the contact’s public key to the <code>contactCode</code> variable, and the body of the message in <code>messageContent</code>.</p>
 <p>Sending a message to a specific asymmetric public key is similar to sending it to a symmetric key. The difference is that you need to specify the <code>pubKey</code> attribute instead of <code>symKeyId</code>.</p>
-<pre><code>// Send private message
+<pre><code class="javascript">// Send private message
 web3.shh.post({
     pubKey: contactCode,
     sig: keyPair,
@@ -312,11 +325,12 @@ web3.shh.post({
     powTime: POW_TIME,
     powTarget: POW_TARGET
 });
-</code></pre><blockquote>
+</code></pre>
+<blockquote>
 <p>In Ubuntu, you need to press <code>Shift</code> and drag-click the mouse to select the contact’s public key</p>
 </blockquote>
 <h4 id="TODO-Subscribe-to-private-messages" class="article-heading"><a href="#TODO-Subscribe-to-private-messages" class="headerlink" title="// TODO: Subscribe to private messages"></a><code>// TODO: Subscribe to private messages</code><a class="article-anchor" href="#TODO-Subscribe-to-private-messages" aria-hidden="true"></a></h4><p>Similar to receiving messages from the public channel, we’ll need to create a subscription in order to receive private messages. To do this for private messages, we use as a <code>privateKeyID</code> our <code>keyPair</code> in order for the subscription to receive messages that were sent to our public key.</p>
-<pre><code>// Subscribe to private messages
+<pre><code class="javascript">// Subscribe to private messages
 web3.shh.subscribe(&quot;messages&quot;, {
     minPow: POW_TARGET,
     privateKeyID: keyPair,
@@ -326,13 +340,14 @@ web3.shh.subscribe(&quot;messages&quot;, {
 }).on(&#39;error&#39;, (err) =&gt; {
     ui.addError(&quot;Couldn&#39;t decode message: &quot; + err.message);
 });
-</code></pre><p>Once you add this code, go ahead and open three instances of our chat application, write a public message in one window, and in the other, copy the public key and send a private message to the account that created the first message. The first and second window will be able to see the message, but the third window will only have received the public message.</p>
+</code></pre>
+<p>Once you add this code, go ahead and open three instances of our chat application, write a public message in one window, and in the other, copy the public key and send a private message to the account that created the first message. The first and second window will be able to see the message, but the third window will only have received the public message.</p>
 <h2 id="Final-thoughts" class="article-heading"><a href="#Final-thoughts" class="headerlink" title="Final thoughts"></a>Final thoughts<a class="article-anchor" href="#Final-thoughts" aria-hidden="true"></a></h2><p>As you can see, using Whisper for decentralized communication is quite easy, and you could leverage the protocol for passing offchain messages that are cryptographically secure. Bloom does this, as did <a href="https://mybroadband.co.za/news/cryptocurrency/265811-how-the-sa-reserve-banks-ethereum-project-works.html" target="_blank" rel="noopener">Project Khoka in South Africa</a>, among many others.</p>
 <p>However, at the moment there aren’t enough online nodes available that have Whisper enabled (probably due to lack of incentives for running this feature), so messages may fail to get delivered unless you bootstrap some nodes like we do here at Status. You can contribute to the number of nodes availables by running your own node with the <code>--shh</code> option enabled. We’ll &lt;3 you forever.</p>
 
 							</div>
 							<div class="docs-footer">
-								Last update: 2019-07-15
+								Last update: 2019-09-13
 								
 							</div>
 						</div>

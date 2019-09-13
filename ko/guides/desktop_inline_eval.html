@@ -226,12 +226,12 @@
 <p>The goal of this tutorial is to get someone new to <a href="https://github.com/stauts-im/status-react" target="_blank" rel="noopener">status-react</a> to the point where they can evaluate expressions in-line in their editor. Inline evaluation is one of the things that makes Clojure both fun and powerful. Bruce Hauman talks about this in his motivation behind creating <a href="https://github.com/bhauman/rebel-readline/blob/master/rebel-readline/doc/intro.md" target="_blank" rel="noopener">rebel-readline</a>.</p>
 <p>What follows is a layman’s account of how to get to that “aha” moment, specifically for the desktop flavor of <code>status-react</code>.</p>
 <h2 id="Part-1-Through-the-Forest" class="article-heading"><a href="#Part-1-Through-the-Forest" class="headerlink" title="Part 1: Through the Forest"></a>Part 1: Through the Forest<a class="article-anchor" href="#Part-1-Through-the-Forest" aria-hidden="true"></a></h2><p>The offical instructions for building status-desktop are <a href="../build_status/desktop.html">here</a> Go check them out: they’re great! You’ll see that the “big 4” commands you need run at any one time are:</p>
-<pre><code class="bash">npm start
-node ubuntu-server
+<pre><code class="bash">make react-native-desktop
+make desktop-server
 make watch-desktop
-react-native run-desktop
+make run-desktop
 </code></pre>
-<p>For the purposes of understanding the repl and eventually getting inline-eval working, the remainder of this post will focus on the third step: <code>make watch-desktop</code>. Under the hood it runs:</p>
+<p>For the purposes of understanding the repl and eventually getting inline-eval working, the remainder of this post will focus on the first step: <code>make startdev-desktop</code>. Under the hood it runs:</p>
 <pre><code class="bash">clj -R:dev build.clj watch --platform desktop
 </code></pre>
 <p>Here, <code>clj</code> (really just <code>rlwrap</code> around the clojure command) calls a method in the <code>build.clj</code> file called <code>watch</code>. Straightforward enough! Peeling back the layers of how this starts a repl is one route towards understanding our tooling and getting inline-eval working.</p>
@@ -239,7 +239,7 @@ react-native run-desktop
 <p>Aside from moving from <code>lein</code> to <code>cli</code>, the second big part of the tooling to grok in order to get to that repl/inline-eval goodness has to do with <code>figwheel</code>. Thankfully, this is pretty straightforward. <code>Fighweel-sidecar</code> is <code>figwheel</code> without any inherent dependency on <code>lein</code>. Check it out at <a href="https://github.com/bhauman/lein-figwheel/tree/master/sidecar" target="_blank" rel="noopener">here</a>.</p>
 <p>Now that there’s a bit of context around clojure <code>cli</code> and <code>figwheel</code>, it might be worth revisiting that command: <code>clj -R:dev build.clj watch --platform desktop</code> which we set out to understand in pursuit of a larger truth. The command starts <code>figwheel</code> to hot-reload project files (though status uses a helper utility <code>clj-rn</code> to do it) and then it starts a clojurescript repl right in your terminal via <code>figwheel sidecar</code>.</p>
 <p>One final side effect of this command worth noting is that it starts nrepl on a port that we can connect to later. What is nrepl? More on that in Part 3.</p>
-<h2 id="Part-3-Connecting-The-Caves" class="article-heading"><a href="#Part-3-Connecting-The-Caves" class="headerlink" title="Part 3: Connecting The Caves"></a>Part 3: Connecting The Caves<a class="article-anchor" href="#Part-3-Connecting-The-Caves" aria-hidden="true"></a></h2><p>Working with a clojure repl can be an enjoyable experience, but something about a clojure nrepl feels daunting. Most ignore the <code>n</code>, until one day they realise that <code>n</code> just stands for <code>network</code>, making nrepl the network repl. It comes with a client and a server. When we run <code>make watch-desktop</code>, figwheel starts an nrepl server on port <code>7888</code> and a first client of that server right in your terminal. </p>
+<h2 id="Part-3-Connecting-The-Caves" class="article-heading"><a href="#Part-3-Connecting-The-Caves" class="headerlink" title="Part 3: Connecting The Caves"></a>Part 3: Connecting The Caves<a class="article-anchor" href="#Part-3-Connecting-The-Caves" aria-hidden="true"></a></h2><p>Working with a clojure repl can be an enjoyable experience, but something about a clojure nrepl feels daunting. Most ignore the <code>n</code>, until one day they realise that <code>n</code> just stands for <code>network</code>, making nrepl the network repl. It comes with a client and a server. When we run <code>make watch-desktop</code>, figwheel starts an nrepl server on port <code>7888</code> and a first client of that server right in your terminal.</p>
 <p>The goal of this exercise is now to connect a second client from your editor.</p>
 <p>(Disclaimer the rest of this post assumes <a href="https://github.com/clojure-emacs/cider" target="_blank" rel="noopener">cider-emacs</a>. There are other ways, vim-fireplace, etc. Experiment with whichever one works for you!)</p>
 <p>As of the time of writing, November 2018, it can be confusing to track down which version of nrepl to use. There are a lot of github repositories and clojars artifacts who have thrown their hats into the arena. Clojure tools has an nrepl. Cider has an nrepl. Even nrepl has an nrepl! To keep things simple: <code>status-react</code> includes <code>cider/cider-nrepl</code> in its <code>deps.edn</code> and it works well for the purposes of our project. If you’re curious about the history and origins of nrepl: <a href="https://nrepl.xyz/nrepl/about/history.html" target="_blank" rel="noopener">this post by Bozhidar</a> goes into more depth.</p>
@@ -255,10 +255,10 @@ react-native run-desktop
 <p>You evaluate this elisp code however you want. The goal of this post is just to show one possible way. I’ve rolled the above into a <a href="https://github.com/rcullito/emacsfiles/commit/4332d44c21cf264eb7c20bf9760c090dc17c08e9" target="_blank" rel="noopener">single defun</a> that I call when opening up emacs. </p>
 <p>Our <a href="https://status.im/build_status/desktop.html">build docs</a> offers another great solution by using a <code>.dir-locals</code> file. Any solution is fair game, it’s just worth noting that an understanding of how all the pieces work together is crucial for how you go about configuring this last step.</p>
 <p>So, in order to run status-react, follow along via all the init steps outlined <a href="https://status.im/build_status/desktop.html">here</a> and run “the big 4”, which are:</p>
-<pre><code class="bash">npm start
-node ubuntu-server
+<pre><code class="bash">make react-native-desktop
+make desktop-server
 make watch-desktop
-react-native run-desktop
+make run-desktop
 </code></pre>
 <p>Finally, open emacs and evaluate the elisp code in the manner agreeable to you. Then, at long last, you can open an arbitrary clojurescript file, and evaulate any expression to your heart’s content. Happy coding.</p>
 <h2 id="Conclusion" class="article-heading"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion<a class="article-anchor" href="#Conclusion" aria-hidden="true"></a></h2><p>The above steps are meant to make it a little easier to get started with, and reason about, status-react. This should hopefully help you, an intrepid new contributor to building a better web, get a foot in the door. Gaining some sense of momentum when participating in a new project for the first time is important, so let us know how we can improve this further! (And don’t hesitate to reach out to us within Status in the <a href="https://get.status.im/chat/public/clojure" target="_blank" rel="noopener">#clojure channel</a>).</p>
@@ -267,7 +267,7 @@ react-native run-desktop
 
 							</div>
 							<div class="docs-footer">
-								Last update: 2019-07-15
+								Last update: 2019-09-13
 								
 							</div>
 						</div>

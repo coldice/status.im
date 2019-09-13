@@ -239,7 +239,7 @@
 <pre><code class="clojure">:on-send       [load-dtwitt]
 </code></pre>
 <p>The <code>posts(uint256)</code> method is called to retrieve the post details. The encapsulated IPFS hash is then used to retrieve the post content.</p>
-<pre><code>events/put-dtwitt
+<pre><code class="clojure">events/put-dtwitt
 (let [{result :result} properties]
   [store/put {:key &quot;dtwitt&quot; :value result}])
 events/load-dtwitt
@@ -252,14 +252,14 @@ Here, we're calling a contract at a specfic address on Ethereum, targeting a spe
 
 Our short preview definition is a simple text element:
 
-```
+``` clojure
  (let [{{{id :id} :params} :content} properties]
   [text "Vote for ${id}"])
 ```
 
 Our preview definition displays some details about a dtwitt and allows to upvote it via a button:
 
-```
+``` clojure
  (let [{{params :params} :content
         outgoing :outgoing timestamp-str :timestamp-str} properties
        {description :description} [store/get {:key "dtwitt"}]]
@@ -268,7 +268,8 @@ Our preview definition displays some details about a dtwitt and allows to upvote
     [text description]
     [button {:on-click [vote-dtwitt]}
      &quot;Upvote&quot;]])
-</code></pre><h1 id="Full-extension-code" class="article-heading"><a href="#Full-extension-code" class="headerlink" title="Full extension code"></a>Full extension code<a class="article-anchor" href="#Full-extension-code" aria-hidden="true"></a></h1><pre><code>{meta {:name          &quot;DTwitter&quot;
+</code></pre>
+<h1 id="Full-extension-code" class="article-heading"><a href="#Full-extension-code" class="headerlink" title="Full extension code"></a>Full extension code<a class="article-anchor" href="#Full-extension-code" aria-hidden="true"></a></h1><pre><code class="clojure">{meta {:name          &quot;DTwitter&quot;
        :description   &quot;Access DTwitter posts&quot;
        :documentation &quot;Commands to interract with DTwitter.&quot;}
 
@@ -308,9 +309,10 @@ Our preview definition displays some details about a dtwitt and allows to upvote
                    :type        :text
                    :placeholder "Vote id"}]}}
 </code></pre>
+
 							</div>
 							<div class="docs-footer">
-								Last update: 2019-07-15
+								Last update: 2019-09-13
 								
 							</div>
 						</div>

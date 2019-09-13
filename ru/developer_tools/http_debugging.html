@@ -225,16 +225,18 @@
 </ul>
 <h1 id="API-description" class="article-heading"><a href="#API-description" class="headerlink" title="API description"></a>API description<a class="article-anchor" href="#API-description" aria-hidden="true"></a></h1><h2 id="POST-ping" class="article-heading"><a href="#POST-ping" class="headerlink" title="POST /ping"></a>POST /ping<a class="article-anchor" href="#POST-ping" aria-hidden="true"></a></h2><p>Simply pings the device.</p>
 <p>Request:</p>
-<pre><code>http -v POST localhost:5561/ping
-</code></pre><p>Response:</p>
+<pre><code class="bash">http -v POST localhost:5561/ping
+</code></pre>
+<p>Response:</p>
 <pre><code>HTTP/1.1 200 OK
 {
     &quot;message&quot;: &quot;Pong!&quot;
 }
 </code></pre><h2 id="POST-dapp-open" class="article-heading"><a href="#POST-dapp-open" class="headerlink" title="POST /dapp/open"></a>POST /dapp/open<a class="article-anchor" href="#POST-dapp-open" aria-hidden="true"></a></h2><p>Opens a DApp with a specified <code>url</code></p>
 <p>Request:</p>
-<pre><code>http -v --json POST localhost:5561/dapp/open url=&lt;dapp_url&gt;
-</code></pre><p>Response:</p>
+<pre><code class="bash">http -v --json POST localhost:5561/dapp/open url=&lt;dapp_url&gt;
+</code></pre>
+<p>Response:</p>
 <pre><code>HTTP/1.1 200 OK
 {
     &quot;message&quot;: &quot;URL has been opened.&quot;
@@ -247,8 +249,9 @@
 <li><code>network-id</code> — id of the network (<a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md#list-of-chain-ids)" target="_blank" rel="noopener">https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md#list-of-chain-ids)</a>.</li>
 </ul>
 <p>Request:</p>
-<pre><code>http -v --json POST localhost:5561/network name=AnyNetworkName url=http://localhost:3000 chain=mainnet network-id=2
-</code></pre><p>Response:</p>
+<pre><code class="bash">http -v --json POST localhost:5561/network name=AnyNetworkName url=http://localhost:3000 chain=mainnet network-id=2
+</code></pre>
+<p>Response:</p>
 <pre><code>HTTP/1.1 200 OK
 {
     &quot;message&quot;: &quot;Network has been added.&quot;,
@@ -260,8 +263,9 @@
 }
 </code></pre><h2 id="POST-network-connect" class="article-heading"><a href="#POST-network-connect" class="headerlink" title="POST /network/connect"></a>POST /network/connect<a class="article-anchor" href="#POST-network-connect" aria-hidden="true"></a></h2><p>Switches to a network with a specified <code>id</code>. The network should be created first!</p>
 <p>Request:</p>
-<pre><code>http -v --json POST localhost:5561/network/connect id=1535660846036b3c3241022ec5046af53cdb769dcc216
-</code></pre><p>Response:</p>
+<pre><code class="bash">http -v --json POST localhost:5561/network/connect id=1535660846036b3c3241022ec5046af53cdb769dcc216
+</code></pre>
+<p>Response:</p>
 <pre><code>HTTP/1.1 200 OK
 {
     &quot;message&quot;: &quot;Network has been connected.&quot;,
@@ -273,8 +277,9 @@
 }
 </code></pre><h2 id="DELETE-network" class="article-heading"><a href="#DELETE-network" class="headerlink" title="DELETE /network"></a>DELETE /network<a class="article-anchor" href="#DELETE-network" aria-hidden="true"></a></h2><p>Deletes a network with a specified <code>id</code>. <code>400 Bad Request</code> can be returned if the network doesn’t existed or when it’s a current one.</p>
 <p>Request:</p>
-<pre><code>http -v --json DELETE localhost:5561/network id=1535660846036b3c3241022ec5046af53cdb769dcc216
-</code></pre><p>Response:</p>
+<pre><code class="bash">http -v --json DELETE localhost:5561/network id=1535660846036b3c3241022ec5046af53cdb769dcc216
+</code></pre>
+<p>Response:</p>
 <pre><code>HTTP/1.1 200 OK
 {
     &quot;message&quot;: &quot;Network has been deleted.&quot;,
@@ -291,7 +296,7 @@
 </code></pre>
 							</div>
 							<div class="docs-footer">
-								Last update: 2019-07-15
+								Last update: 2019-09-13
 								
 							</div>
 						</div>

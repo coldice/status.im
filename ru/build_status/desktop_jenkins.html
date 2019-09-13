@@ -216,22 +216,24 @@
 						<div class="col-md-12">
 							<div class="editor-content">
 								<h1 id="Using-The-Jenkins-Pipleine" class="article-heading"><a href="#Using-The-Jenkins-Pipleine" class="headerlink" title="Using The Jenkins Pipleine"></a>Using The Jenkins Pipleine<a class="article-anchor" href="#Using-The-Jenkins-Pipleine" aria-hidden="true"></a></h1><h2 id="Mac-OS" class="article-heading"><a href="#Mac-OS" class="headerlink" title="Mac OS"></a>Mac OS<a class="article-anchor" href="#Mac-OS" aria-hidden="true"></a></h2><p>Qt 5.9.1 can be installed from brew receipt:</p>
-<pre><code>brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/a505729a8c75aa9e83f31fdcac0223746a88e8e9/Formula/qt.rb
+<pre><code class="bash">brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/a505729a8c75aa9e83f31fdcac0223746a88e8e9/Formula/qt.rb
 brew link qt --force
 ln -s /usr/local/Cellar/qt/5.9.1/mkspecs /usr/local/mkspecs &amp;&amp; ln -s /usr/local/Cellar/qt/5.9.1/plugins /usr/local/plugins
-</code></pre><p>If Qt is installed from brew package Qt libraries have rpaths which are not correctly processed by <code>macdeployqt</code> tool. To overcome <code>macdeploy</code> issues during Mac OS .app bundle creation, it’s possible to run <code>macdeployqtfix.py</code> tool after <code>macdeployqt</code> finishes the work:</p>
-<pre><code>sh (&#39;macdeployqt &#39; + packageFolder + &#39;/Status.app -always-overwrite -verbose=1 -qmldir=&quot;&#39; + scriptPath + &#39;/node_modules/react-native/ReactQt/application/src/&quot; -qmldir=&quot;&#39; + scriptPath + &#39;/node_modules/react-native/ReactQt/runtime/src/qml/&quot;&#39;)
+</code></pre>
+<p>If Qt is installed from brew package Qt libraries have rpaths which are not correctly processed by <code>macdeployqt</code> tool. To overcome <code>macdeploy</code> issues during Mac OS .app bundle creation, it’s possible to run <code>macdeployqtfix.py</code> tool after <code>macdeployqt</code> finishes the work:</p>
+<pre><code class="bash">sh (&#39;macdeployqt &#39; + packageFolder + &#39;/Status.app -always-overwrite -verbose=1 -qmldir=&quot;&#39; + scriptPath + &#39;/node_modules/react-native/ReactQt/application/src/&quot; -qmldir=&quot;&#39; + scriptPath + &#39;/node_modules/react-native/ReactQt/runtime/src/qml/&quot;&#39;)
 sh (&#39;python /Users/administrator/macdeployqtfix/macdeployqtfix/macdeployqtfix.py &#39; + packageFolder + &#39;/Status.app/Contents/MacOs/Status /usr/local/Cellar/qt/5.9.1&#39;)
-
-</code></pre><h2 id="General-setup" class="article-heading"><a href="#General-setup" class="headerlink" title="General setup"></a>General setup<a class="article-anchor" href="#General-setup" aria-hidden="true"></a></h2><h3 id="react-native-cli" class="article-heading"><a href="#react-native-cli" class="headerlink" title="react-native-cli"></a>react-native-cli<a class="article-anchor" href="#react-native-cli" aria-hidden="true"></a></h3><p>Modified react-native-cli can be installed globally on Jenkins machine from some location.</p>
-<pre><code>cd ~/
+</code></pre>
+<h2 id="General-setup" class="article-heading"><a href="#General-setup" class="headerlink" title="General setup"></a>General setup<a class="article-anchor" href="#General-setup" aria-hidden="true"></a></h2><h3 id="react-native-cli" class="article-heading"><a href="#react-native-cli" class="headerlink" title="react-native-cli"></a>react-native-cli<a class="article-anchor" href="#react-native-cli" aria-hidden="true"></a></h3><p>Modified react-native-cli can be installed globally on Jenkins machine from some location.</p>
+<pre><code class="bash">cd ~/
 git clone https://github.com/status-im/react-native-desktop.git
 cd react-native-desktop/react-native-cli
 npm install -g
 </code></pre>
+
 							</div>
 							<div class="docs-footer">
-								Last update: 2019-07-15
+								Last update: 2019-09-13
 								
 							</div>
 						</div>

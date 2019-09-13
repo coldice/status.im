@@ -220,7 +220,7 @@
 <h4 id="JavaScript-API-methods" class="article-heading"><a href="#JavaScript-API-methods" class="headerlink" title="JavaScript API methods"></a>JavaScript API methods<a class="article-anchor" href="#JavaScript-API-methods" aria-hidden="true"></a></h4><ul>
 <li><code>getContactCode</code> provides access to a user’s Whisper ID, which can be used to initiate chats or add a contact.</li>
 </ul>
-<h4 id="Example-implementation" class="article-heading"><a href="#Example-implementation" class="headerlink" title="Example implementation"></a>Example implementation<a class="article-anchor" href="#Example-implementation" aria-hidden="true"></a></h4><pre><code class="JavaScript">window.ethereum.status
+<h4 id="Example-implementation" class="article-heading"><a href="#Example-implementation" class="headerlink" title="Example implementation"></a>Example implementation<a class="article-anchor" href="#Example-implementation" aria-hidden="true"></a></h4><pre><code class="js">window.ethereum.status
  .getContactCode()
  .then(data =&gt; {
    console.log(&#39;Contact code:&#39;, data)
@@ -232,11 +232,11 @@
 <ul>
 <li><code>installExtension(&quot;extension-url&quot;)</code> allows DApp developers to trigger a native screen for installation of extension.</li>
 </ul>
-<h4 id="Example-implementation-1" class="article-heading"><a href="#Example-implementation-1" class="headerlink" title="Example implementation"></a>Example implementation<a class="article-anchor" href="#Example-implementation-1" aria-hidden="true"></a></h4><pre><code class="JavaScript">window.ethereum.status.installExtension(&quot;https://get.status.im/extension/ipfs@Qmb1B3jXNdc9WZCcWFzpkTXtrurnKxYQFvUDhp2J4SVCCX&quot;)
+<h4 id="Example-implementation-1" class="article-heading"><a href="#Example-implementation-1" class="headerlink" title="Example implementation"></a>Example implementation<a class="article-anchor" href="#Example-implementation-1" aria-hidden="true"></a></h4><pre><code class="js">window.ethereum.status.installExtension(&quot;https://get.status.im/extension/ipfs@Qmb1B3jXNdc9WZCcWFzpkTXtrurnKxYQFvUDhp2J4SVCCX&quot;)
 </code></pre>
 <h2 id="Other-APIs" class="article-heading"><a href="#Other-APIs" class="headerlink" title="Other APIs"></a>Other APIs<a class="article-anchor" href="#Other-APIs" aria-hidden="true"></a></h2><p>Status also implements a number of APIs standardized by EIPs.</p>
 <h3 id="ERC945" class="article-heading"><a href="#ERC945" class="headerlink" title="ERC945"></a>ERC945<a class="article-anchor" href="#ERC945" aria-hidden="true"></a></h3><p><a href="QR Code Scanning API">https://github.com/ethereum/EIPs/issues/945</a> allows DApp developers to trigger a native generic QR code scanner.</p>
-<h4 id="Example" class="article-heading"><a href="#Example" class="headerlink" title="Example"></a>Example<a class="article-anchor" href="#Example" aria-hidden="true"></a></h4><pre><code class="JavaScript">window.ethereum
+<h4 id="Example" class="article-heading"><a href="#Example" class="headerlink" title="Example"></a>Example<a class="article-anchor" href="#Example" aria-hidden="true"></a></h4><pre><code class="js">window.ethereum
  .scanQRCode()
  .then(data =&gt; {
    console.log(&#39;QR Scanned:&#39;, data)
@@ -248,7 +248,7 @@
 
 							</div>
 							<div class="docs-footer">
-								Last update: 2019-07-15
+								Last update: 2019-09-13
 								
 							</div>
 						</div>

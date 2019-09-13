@@ -312,17 +312,17 @@ make startdev-android-real
 <p>To fix similar errors run the following commands:</p>
 <pre><code class="bash">cd ios
 pod update
-cd ..
+cd -
 
-cd node_modules/react-native/scripts &amp;&amp; ./ios-install-third-party.sh &amp;&amp; cd ../../../
+cd node_modules/react-native/scripts &amp;&amp; ./ios-install-third-party.sh &amp;&amp; cd -
 
-cd node_modules/react-native/third-party/glog-0.3.4/ &amp;&amp; ../../scripts/ios-configure-glog.sh &amp;&amp; cd ../../../../
+cd node_modules/react-native/third-party/glog-0.3.4/ &amp;&amp; ../../scripts/ios-configure-glog.sh &amp;&amp; cd -
 </code></pre>
 <p>Now you should be able to compile again. The issue reference is <a href="https://github.com/facebook/react-native/issues/21168#issuecomment-422431294" target="_blank" rel="noopener">here</a>.</p>
 
 							</div>
 							<div class="docs-footer">
-								Last update: 2019-08-14
+								Last update: 2019-09-13
 								
 							</div>
 						</div>
